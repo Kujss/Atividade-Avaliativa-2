@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include<locale.h>
+
+
+int validaQuantidade();
+
+float calculaSalario(int quantidade);
+
+void mostraFinal(int quantidade, float salario);
+
+
+int main() {
+
+  setlocale(LC_ALL, "portuguese");
+  
+    int quantidade;
+  
+    float salario;
+
+    printf("Bem-vindo(a) ao gerenciamento de remuneração\n");
+  
+    while (1) {
+        quantidade = validaQuantidade();
+        if (quantidade == -1) {
+          printf("Você encerrou a operação.");
+          break;
+        }
+        salario = calculaSalario(quantidade); 
+        mostraFinal(quantidade, salario); 
+    }
+
+}
+
+
+int validaQuantidade() {
+    int quantidade;
+    printf("Informe a quantidade de peças fabricadas (-1 para encerrar): ");
+    scanf("%d", &quantidade);
+
+    if (quantidade < -1) {
+        printf("Quantidade inválida. Tente novamente.\n");
+        return validaQuantidade(); 
+    }
+
+    return quantidade;
+}
+
+
+float calculaSalario(int quantidade) {
+    const int salarioBase = 600;
+    float adicional = 0;
+
+    if (quantidade > 50) {
+        adicional += (quantidade - 50) * 0.5;
+        if (quantidade > 80) {
+            adicional += (quantidade - 80) * 0.25; 
+        }
+    }
+
+    return salarioBase + adicional;
+}
+
+void mostraFinal(int quantidade, float salario) {
+    printf("Quantidade de peças: %d\n", quantidade);
+    printf("Salário: R$ %.2f\n", salario);
+    printf("\n");
+}
