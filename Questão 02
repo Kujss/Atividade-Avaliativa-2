@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <locale.h>
+
+
+char validaDados();
+
+char classificaSalario(float salario);
+
+void mostraClassifica(char sexo, float salario, char classificacao);
+
+int main() {
+
+  setlocale(LC_ALL, "portuguese");
+  
+    int numAssalariados;
+  
+    int assalariadosAbaixo = 0;
+  
+    int assalariadosAcima = 0;
+
+    printf("Informe o número de assalariados: ");
+    scanf("%d", &numAssalariados);
+
+    for (int i = 1; i <= numAssalariados; i++) {
+      
+        char sexo = validaDados();
+      
+        float salario;
+
+        printf("Informe quanto o assalariado %d ganha: R$ ", i);
+        scanf("%f", &salario);
+
+        char classificacao = classificaSalario(salario);
+
+        if (classificacao == 'A') {
+            assalariadosAcima++;
+          
+        } else if (classificacao == 'B') {
+            assalariadosAbaixo++;
+        }
+
+        mostraClassifica(sexo, salario, classificacao);
+    }
+
+    printf("\nTotal de assalariados abaixo do salário mínimo: %d\n", assalariadosAbaixo);
+  
+    printf("Total de assalariados acima do salário mínimo: %d\n", assalariadosAcima);
+
+
+
+  
+}
+
+
+char validaDados() {
+  
+    char sexo;
+  
+    while (1) {
+        printf("Informe o sexo (M/F): ");
+        scanf(" %c", &sexo); 
+        if (sexo == 'M' || sexo == 'F') {
+            return sexo;
+        } else {
+            printf("Sexo inválido, tente novamente.\n");
+        }
+
+
+      
+    }
+
+  
+}
+
+char classificaSalario(float salario) {
+  
+    const float salarioMinimo = 1400.00;
+    if (salario > salarioMinimo) {
+        return 'A';
+       // Acima
+      
+    } else if (salario < salarioMinimo) {
+        return 'B';
+      // Abaixo
+      
+    } else {
+        return 'I';
+      // Igual
+      
+    }
+
+  
+}
+
+void mostraClassifica(char sexo, float salario, char classificacao) {
+  
+    printf("Sexo: %s\n", sexo == 'M' ? "Masculino" : "Feminino");
+  
+    printf("Salário: R$ %.2f\n", salario);
+  
+    printf("Classificação: %s do salário mínimo\n", classificacao == 'A' ? "Acima" : (classificacao == 'B' ? "Abaixo" : "Igual"));
+  
+}
